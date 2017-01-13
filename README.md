@@ -1,2 +1,2 @@
 # TakeYourChain
-The program to search for original/analog chains
+The program to search for original/analogue chains
