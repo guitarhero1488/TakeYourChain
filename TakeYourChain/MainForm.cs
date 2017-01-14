@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TakeYourChain
@@ -16,24 +11,32 @@ namespace TakeYourChain
         public MainForm()
         {
             InitializeComponent();
+            referenceDgv.AllowUserToAddRows = false;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            referenceTableAdapter.Fill(this.referenceBaseDataSet.Reference);
+            DataSet reference = new DataSet();
+            Connector.Read();
+            referenceDgv.DataSource = Connector.receivedData.Tables[0];
+            referenceDgv.Columns["Id"].ReadOnly = true;
         }
-
-        private void referenceBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.referenceBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.referenceBaseDataSet);
-        }
-
+        
         private void searchBtn_Click(object sender, EventArgs e)
         {
             SearchForm searchForm = new SearchForm();
             searchForm.ShowDialog();
+        }
+
+        private void addStringBtn_Click(object sender, EventArgs e)
+        {
+            AddStringForm addStringForm = new AddStringForm();
+            addStringForm.ShowDialog();
+        }
+
+        private void removeStringBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
