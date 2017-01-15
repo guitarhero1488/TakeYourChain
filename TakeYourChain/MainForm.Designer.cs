@@ -30,18 +30,14 @@
         {
             this.searchBtn = new System.Windows.Forms.Button();
             this.referenceDgv = new System.Windows.Forms.DataGridView();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.addStringBtn = new System.Windows.Forms.ToolStripButton();
-            this.removeStringBtn = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.referenceDgv)).BeginInit();
-            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // searchBtn
             // 
-            this.searchBtn.Location = new System.Drawing.Point(295, 259);
+            this.searchBtn.Location = new System.Drawing.Point(300, 224);
             this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(111, 29);
+            this.searchBtn.Size = new System.Drawing.Size(100, 30);
             this.searchBtn.TabIndex = 1;
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = true;
@@ -49,53 +45,19 @@
             // 
             // referenceDgv
             // 
+            this.referenceDgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.referenceDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.referenceDgv.Location = new System.Drawing.Point(36, 12);
+            this.referenceDgv.Location = new System.Drawing.Point(5, 12);
             this.referenceDgv.Name = "referenceDgv";
-            this.referenceDgv.Size = new System.Drawing.Size(643, 241);
+            this.referenceDgv.Size = new System.Drawing.Size(674, 200);
             this.referenceDgv.TabIndex = 3;
-            // 
-            // toolStrip
-            // 
-            this.toolStrip.AutoSize = false;
-            this.toolStrip.Dock = System.Windows.Forms.DockStyle.Left;
-            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addStringBtn,
-            this.removeStringBtn});
-            this.toolStrip.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip.Name = "toolStrip";
-            this.toolStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStrip.Size = new System.Drawing.Size(33, 298);
-            this.toolStrip.TabIndex = 4;
-            // 
-            // addStringBtn
-            // 
-            this.addStringBtn.AutoSize = false;
-            this.addStringBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.addStringBtn.Image = global::TakeYourChain.Properties.Resources.add;
-            this.addStringBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.addStringBtn.Name = "addStringBtn";
-            this.addStringBtn.Size = new System.Drawing.Size(30, 30);
-            this.addStringBtn.Text = "toolStripButton1";
-            this.addStringBtn.Click += new System.EventHandler(this.addStringBtn_Click);
-            // 
-            // removeStringBtn
-            // 
-            this.removeStringBtn.AutoSize = false;
-            this.removeStringBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.removeStringBtn.Image = global::TakeYourChain.Properties.Resources.remove;
-            this.removeStringBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeStringBtn.Name = "removeStringBtn";
-            this.removeStringBtn.Size = new System.Drawing.Size(30, 30);
-            this.removeStringBtn.Text = "toolStripButton2";
-            this.removeStringBtn.Click += new System.EventHandler(this.removeStringBtn_Click);
+            this.referenceDgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.referenceDgv_CellEndEdit);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 298);
-            this.Controls.Add(this.toolStrip);
+            this.ClientSize = new System.Drawing.Size(684, 261);
             this.Controls.Add(this.referenceDgv);
             this.Controls.Add(this.searchBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -104,19 +66,13 @@
             this.Text = "TakeYourChain";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.referenceDgv)).EndInit();
-            this.toolStrip.ResumeLayout(false);
-            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Button searchBtn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridView referenceDgv;
-        private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton addStringBtn;
-        private System.Windows.Forms.ToolStripButton removeStringBtn;
     }
 }
 

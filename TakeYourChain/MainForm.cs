@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace TakeYourChain
@@ -11,15 +8,26 @@ namespace TakeYourChain
         public MainForm()
         {
             InitializeComponent();
-            referenceDgv.AllowUserToAddRows = false;
         }
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            DataSet reference = new DataSet();
             Connector.Read();
-            referenceDgv.DataSource = Connector.receivedData.Tables[0];
-            referenceDgv.Columns["Id"].ReadOnly = true;
+            try
+            {
+                referenceDgv.DataSource = Connector.receivedData.Tables[0];
+                referenceDgv.Columns["Id"].ReadOnly = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Connector.CloseConnection();
         }
         
         private void searchBtn_Click(object sender, EventArgs e)
@@ -28,15 +36,9 @@ namespace TakeYourChain
             searchForm.ShowDialog();
         }
 
-        private void addStringBtn_Click(object sender, EventArgs e)
+        private void referenceDgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            AddStringForm addStringForm = new AddStringForm();
-            addStringForm.ShowDialog();
-        }
-
-        private void removeStringBtn_Click(object sender, EventArgs e)
-        {
-
+            Connector.AddRow();
         }
     }
 }

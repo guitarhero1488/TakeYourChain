@@ -140,8 +140,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>ReferenceDatabase.mdf</DependentUpon>
     </Content>
-    <None Include="Resources\remove.png" />
-    <None Include="Resources\add.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

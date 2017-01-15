@@ -7,45 +7,57 @@ namespace TakeYourChain
 {
     class Connector
     {        
-        private static string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|ReferenceDatabase.mdf;Integrated Security=True";
-        private static string commandRead = "select * from [Reference]";
+        private static string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Порча\demos\TakeYourChain\TakeYourChain\ReferenceDatabase.mdf;Integrated Security=True";
+        private static string commandRead = "select * from Reference";
         public static DataSet receivedData;
-        
+        private static SqlConnection connection = new SqlConnection(connectionString);
+        private static SqlDataAdapter adapter = new SqlDataAdapter(commandRead, connection);
+        private static SqlCommandBuilder cmdBuilder = new SqlCommandBuilder(adapter);
+
         public static void Read()
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(commandRead, connection);
-                    receivedData = new DataSet();
-                    adapter.Fill(receivedData);                
-                }
+                receivedData = new DataSet();
+                adapter.Fill(receivedData);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (connection.State != ConnectionState.Closed)
+                {
+                    CloseConnection();
+                }
+            }
         }
 
-        public static void AddRow(params string[] parameters)
+        public static void AddRow()
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter(commandRead, connection);
-                    SqlCommandBuilder cmdBuilder = new SqlCommandBuilder(adapter);
-                    receivedData.Tables[0].Rows.Add(parameters);
-                    adapter.Update(receivedData);
-                    MessageBox.Show(cmdBuilder.GetUpdateCommand().CommandText);
-                }
+                adapter.Update(receivedData.Tables[0]);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            finally
+            {
+                if (connection.State != ConnectionState.Closed)
+                {
+                    CloseConnection();
+                }
+            }
+        }
+        
+        public static void CloseConnection()
+        {
+            if (connection.State != ConnectionState.Closed)
+            {
+                connection.Close();
             }
         }
     }

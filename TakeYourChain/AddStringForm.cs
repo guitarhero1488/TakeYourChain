@@ -13,7 +13,7 @@ namespace TakeYourChain
         private void addStringBtn_Click(object sender, EventArgs e)
         {
             string[] parameters = new string[] { origArtTb.Text, origNameTb.Text, analArtTb.Text, analNameTb.Text, trustTb.Text };
-            Connector.AddRow(parameters);
+            //Connector.AddRow(parameters);
         }
     }
 }
