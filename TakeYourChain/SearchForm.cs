@@ -16,5 +16,10 @@ namespace TakeYourChain
         {
             InitializeComponent();
         }
+
+        private void startSearchBtn_Click(object sender, EventArgs e)
+        {
+            Seeker.SearchChain(sourceArtNameTb.Text, targetArtNameTb.Text, depthTb.Text);
+        }
     }
 }

@@ -10,13 +10,14 @@ namespace TakeYourChain
             InitializeComponent();
         }
 
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             Connector.Read();
             try
             {
                 referenceDgv.DataSource = Connector.receivedData.Tables[0];
+                referenceDgv.Columns[0].Width = 100;
+                referenceDgv.Columns["Trust"].Width = 50;
                 referenceDgv.Columns["Id"].ReadOnly = true;
             }
             catch (Exception ex)
@@ -34,11 +35,11 @@ namespace TakeYourChain
         {
             SearchForm searchForm = new SearchForm();
             searchForm.ShowDialog();
-        }
+        }        
 
-        private void referenceDgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void updateBtn_Click(object sender, EventArgs e)
         {
-            Connector.AddRow();
+            Connector.UpdateTable();
         }
     }
 }

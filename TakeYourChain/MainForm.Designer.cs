@@ -30,11 +30,13 @@
         {
             this.searchBtn = new System.Windows.Forms.Button();
             this.referenceDgv = new System.Windows.Forms.DataGridView();
+            this.updateBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.referenceDgv)).BeginInit();
             this.SuspendLayout();
             // 
             // searchBtn
             // 
+            this.searchBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.searchBtn.Location = new System.Drawing.Point(300, 224);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(100, 30);
@@ -50,16 +52,32 @@
             this.referenceDgv.Location = new System.Drawing.Point(5, 12);
             this.referenceDgv.Name = "referenceDgv";
             this.referenceDgv.Size = new System.Drawing.Size(674, 200);
-            this.referenceDgv.TabIndex = 3;
-            this.referenceDgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.referenceDgv_CellEndEdit);
+            this.referenceDgv.TabIndex = 2;
+            // 
+            // updateBtn
+            // 
+            this.updateBtn.BackColor = System.Drawing.Color.Green;
+            this.updateBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.updateBtn.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.updateBtn.FlatAppearance.BorderSize = 0;
+            this.updateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.updateBtn.ForeColor = System.Drawing.SystemColors.Control;
+            this.updateBtn.Location = new System.Drawing.Point(4, 12);
+            this.updateBtn.Name = "updateBtn";
+            this.updateBtn.Size = new System.Drawing.Size(44, 22);
+            this.updateBtn.TabIndex = 3;
+            this.updateBtn.Text = "Save";
+            this.updateBtn.UseVisualStyleBackColor = false;
+            this.updateBtn.Click += new System.EventHandler(this.updateBtn_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 261);
-            this.Controls.Add(this.referenceDgv);
+            this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.searchBtn);
+            this.Controls.Add(this.referenceDgv);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -73,6 +91,7 @@
         #endregion
         private System.Windows.Forms.Button searchBtn;
         private System.Windows.Forms.DataGridView referenceDgv;
+        private System.Windows.Forms.Button updateBtn;
     }
 }
 
