@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TakeYourChain
@@ -19,7 +13,15 @@ namespace TakeYourChain
 
         private void startSearchBtn_Click(object sender, EventArgs e)
         {
-            Seeker.SearchChain(sourceArtNameTb.Text, targetArtNameTb.Text, depthTb.Text);
+            int depth = Convert.ToInt32(depthTb.Text);
+            try
+            {
+                Seeker list = new Seeker(sourceArtNameTb.Text, targetArtNameTb.Text, depth);                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

@@ -4,46 +4,60 @@ namespace TakeYourChain
 {
     class Chain
     {
-        LinkedList<Link> chain = new LinkedList<Link>();
+        public LinkedList<Link> Links = new LinkedList<Link>();
 
         public Chain(string origArt, string origName)
         {
             // Created the first chain's link of view { Article, Name, null, null }
-            chain.AddFirst(new Link(new string[] { origArt, origName }));
+            Links.AddFirst(new Link(new string[] { origArt, origName }));
         }
 
         public void InitLinkAnalog(string anArt, string anName)
         {
-            chain.Last.Value.InitAnalog(anArt, anName);
+            Links.Last.Value.InitAnalog(anArt, anName);
+        }
+
+        public string[] GetLinkOriginal()
+        {
+            return new string[] { Links.Last.Value.originalArt, Links.Last.Value.originalName };
+        }
+
+        public string[] GetLinkAnalog()
+        {
+            return new string[] { Links.Last.Value.analogArt, Links.Last.Value.analogName };
         }
 
         public void AddLink(string origArt, string origName)
         {
-            chain.AddLast(new Link(new string[] { origArt, origName }));
+            Links.AddLast(new Link(new string[] { origArt, origName }));
         }
 
         public void RemoveLastLink()
         {
-            chain.RemoveLast();
+            Links.RemoveLast();
         }
     }
 
     class Link
     {
-        public string[] original;
-        public string[] analog;
+        public string originalArt { get; set; }
+        public string originalName { get; set; }
+        public string analogArt { get; set; }
+        public string analogName { get; set; }
 
         public Link(string[] orig)
         {
-            original = new string[] { orig.GetValue(0).ToString(), orig.GetValue(1).ToString() };
-            analog = new string[] { null, null };
+            originalArt = orig.GetValue(0).ToString();
+            originalName = orig.GetValue(1).ToString();
+            analogArt = null;
+            analogName = null;
         }
 
         public void InitAnalog(string anArt, string anName)
         {
             // Here initialized link's analog fields
-            analog[0] = anArt;
-            analog[1] = anName;
+            analogArt = anArt;
+            analogName = anName;
         }
     }
 }

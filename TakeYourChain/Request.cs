@@ -2,8 +2,8 @@
 {
     class Request
     {
-        public string SourceArt { get; }
-        public string SourceName { get; }
+        public string SourceArt { get; set; }
+        public string SourceName { get; set; }
         public string TargetArt { get; }
         public string TargetName { get; }
         public Request(string _source, string _target)

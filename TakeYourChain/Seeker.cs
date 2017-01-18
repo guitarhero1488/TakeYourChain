@@ -6,37 +6,72 @@ namespace TakeYourChain
 {
     class Seeker
     {
-        public static LinkedList<Chain> chains; // that contains all chains
+        public LinkedList<Chain> list;
+        Request request;
 
-        public static void SearchChain(string sourceData, string targetData, string iterCount)
+        public Seeker(string source, string target, int depth)
         {
-            chains = new LinkedList<Chain>();
-            LinkedList<Chain> originals = new LinkedList<Chain>();  // list of chains where initialized original's fields
-            int depth = Convert.ToInt32(iterCount);
-            Request request = new Request(sourceData, targetData);  // processed search request
-
-            try
-            {
-                InitChainList(request, originals);  // create list of chains' first elements
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message.ToString());
-            }            
+            request = new Request(source, target);
+            list = new LinkedList<Chain>();
+            SearchChain(list, request, depth);
         }
 
-        private static void InitChainList(Request request, LinkedList<Chain> originals)
+        private void SearchChain(LinkedList<Chain> list, Request request, int depth)
         {
-            LinkedList<Chain> list = Connector.CreateOriginalsList(new string[] { request.SourceArt, request.SourceName });
-            if (list == null)
+            if (depth != 0)
             {
-                throw new Exception("No source detail is relevant");
+                foreach (DataRow row in Connector.receivedData.Tables[0].Rows)
+                {
+                    if (string.Equals(request.SourceArt, row.ItemArray[1].ToString()) && string.Equals(request.SourceName, row.ItemArray[2].ToString()))
+                    {
+                        if (string.Equals(request.TargetArt, row.ItemArray[3].ToString()) && string.Equals(request.TargetName, row.ItemArray[4].ToString()))
+                        {
+                            throw new Exception("Target detail is an analogue of this");
+                        }
+                        else
+                        {
+                            Chain chain = new Chain(request.SourceArt, request.SourceName);
+                            chain.InitLinkAnalog(row.ItemArray[3].ToString(), row.ItemArray[4].ToString());
+                            request.SourceArt = row.ItemArray[3].ToString();
+                            request.SourceName = row.ItemArray[4].ToString();
+                            chain.Links.AddLast(SearchLink(chain, request, depth));
+                            if (chain.Links.Last.Value.analogArt == null && chain.Links.Last.Value.analogName == null)
+                            {
+                                chain.RemoveLastLink();
+                                chain.RemoveLastLink();
+                                request.SourceArt = chain.Links.Last.Value.analogArt;
+                                request.SourceName = chain.Links.Last.Value.analogName;
+                            }
+                            list.AddLast(chain);
+                        }
+                    }
+                }
             }
-            LinkedListNode<Chain> node;
-            for (node = list.First; node != null; node = node.Next)
+        }
+
+        public Link SearchLink(Chain chain, Request request, int depth)
+        {
+            if (depth != 0)
             {
-                originals.AddLast(new LinkedListNode<Chain>(node.Value));
+                foreach (DataRow row in Connector.receivedData.Tables[0].Rows)
+                {
+                    if (string.Equals(chain.Links.Last.Value.analogArt, row.ItemArray[1].ToString()) && string.Equals(chain.Links.Last.Value.analogName, row.ItemArray[2].ToString()))
+                    {
+                        if (string.Equals(request.TargetArt, row.ItemArray[3].ToString()) && string.Equals(request.TargetName, row.ItemArray[4].ToString()))
+                        {
+                            chain.AddLink(request.SourceArt, request.SourceName);
+                            chain.InitLinkAnalog(row.ItemArray[3].ToString(), row.ItemArray[4].ToString());
+                            return chain.Links.Last.Value;
+                        }
+                        request.SourceArt = row.ItemArray[3].ToString();
+                        request.SourceName = row.ItemArray[4].ToString();
+                        chain.Links.AddLast(new Link(new string[] { row.ItemArray[1].ToString(), row.ItemArray[2].ToString() }));
+                        chain.InitLinkAnalog(row.ItemArray[3].ToString(), row.ItemArray[4].ToString());
+                        chain.Links.AddLast(SearchLink(chain, request, --depth));
+                    }
+                }
             }
+            return new Link(new string[] { request.SourceArt, request.SourceName });
         }
     }
 }
