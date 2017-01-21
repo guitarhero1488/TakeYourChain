@@ -6,8 +6,8 @@ namespace TakeYourChain
 {
     class Seeker
     {
-        public LinkedList<Chain> list;
-        Request request;
+        private LinkedList<Chain> list;
+        private Request request;
 
         public Seeker(string source, string target, int depth)
         {
@@ -20,58 +20,72 @@ namespace TakeYourChain
         {
             if (depth != 0)
             {
-                foreach (DataRow row in Connector.receivedData.Tables[0].Rows)
+                foreach (DataRow _row in Connector.receivedData.Tables[0].Rows)
                 {
-                    if (string.Equals(request.SourceArt, row.ItemArray[1].ToString()) && string.Equals(request.SourceName, row.ItemArray[2].ToString()))
+                    Row row = new Row(_row.ItemArray[1].ToString(), _row.ItemArray[2].ToString(), _row.ItemArray[3].ToString(), _row.ItemArray[4].ToString());
+                    if (string.Equals(request.SourceArt, row.OriginalArt) && string.Equals(request.SourceName, row.OriginalName))
                     {
-                        if (string.Equals(request.TargetArt, row.ItemArray[3].ToString()) && string.Equals(request.TargetName, row.ItemArray[4].ToString()))
+                        if (string.Equals(request.TargetArt, row.AnalogueArt) && string.Equals(request.TargetName, row.AnalogueName))
                         {
-                            throw new Exception("Target detail is an analogue of this");
+                            throw new Exception("Target detail is the analogue");
                         }
                         else
                         {
                             Chain chain = new Chain(request.SourceArt, request.SourceName);
-                            chain.InitLinkAnalog(row.ItemArray[3].ToString(), row.ItemArray[4].ToString());
-                            request.SourceArt = row.ItemArray[3].ToString();
-                            request.SourceName = row.ItemArray[4].ToString();
-                            chain.Links.AddLast(SearchLink(chain, request, depth));
-                            if (chain.Links.Last.Value.analogArt == null && chain.Links.Last.Value.analogName == null)
+                            chain.InitLinkAnalogue(row.AnalogueArt, row.AnalogueName);
+                            chain = SearchLink(chain, request, depth);
+                            if (chain.Links.Last.Value.analogueArt != null &&   // if founded chain has the necessary end
+                                chain.Links.Last.Value.analogueName != null)
                             {
-                                chain.RemoveLastLink();
-                                chain.RemoveLastLink();
-                                request.SourceArt = chain.Links.Last.Value.analogArt;
-                                request.SourceName = chain.Links.Last.Value.analogName;
+                                list.AddLast(chain);
                             }
-                            list.AddLast(chain);
                         }
                     }
                 }
             }
         }
 
-        public Link SearchLink(Chain chain, Request request, int depth)
+        public Chain SearchLink(Chain chain, Request request, int depth)
         {
             if (depth != 0)
             {
-                foreach (DataRow row in Connector.receivedData.Tables[0].Rows)
+                foreach (DataRow _row in Connector.receivedData.Tables[0].Rows)
                 {
-                    if (string.Equals(chain.Links.Last.Value.analogArt, row.ItemArray[1].ToString()) && string.Equals(chain.Links.Last.Value.analogName, row.ItemArray[2].ToString()))
+                    Row row = new Row(_row.ItemArray[1].ToString(), _row.ItemArray[2].ToString(), _row.ItemArray[3].ToString(), _row.ItemArray[4].ToString());
+                    if (string.Equals(chain.Links.Last.Value.analogueArt, row.OriginalArt) && // if an article and a name of the last chain's link
+                        string.Equals(chain.Links.Last.Value.analogueName, row.OriginalName))  // matches the current row's values
                     {
-                        if (string.Equals(request.TargetArt, row.ItemArray[3].ToString()) && string.Equals(request.TargetName, row.ItemArray[4].ToString()))
+                        if (chain.Links.Last.Value.analogueArt == null && chain.Links.Last.Value.analogueName == null)  // if link's values of analogue aren't empty
                         {
-                            chain.AddLink(request.SourceArt, request.SourceName);
-                            chain.InitLinkAnalog(row.ItemArray[3].ToString(), row.ItemArray[4].ToString());
-                            return chain.Links.Last.Value;
+                            chain.Links.RemoveLast();
                         }
-                        request.SourceArt = row.ItemArray[3].ToString();
-                        request.SourceName = row.ItemArray[4].ToString();
-                        chain.Links.AddLast(new Link(new string[] { row.ItemArray[1].ToString(), row.ItemArray[2].ToString() }));
-                        chain.InitLinkAnalog(row.ItemArray[3].ToString(), row.ItemArray[4].ToString());
-                        chain.Links.AddLast(SearchLink(chain, request, --depth));
+                        if (string.Equals(chain.Links.Last.Value.analogueArt, request.TargetArt) && // if the end of current chain is target
+                            string.Equals(chain.Links.Last.Value.analogueName, request.TargetName))
+                        {
+                            chain.Links.AddLast(new Link(row.OriginalArt, row.OriginalName));
+                            chain.Links.Last.Value.InitAnalogue(row.AnalogueArt, row.AnalogueName);
+                            return chain;
+                        }
+                        else if (row.AnalogueArt == null && row.AnalogueName == null)  // if current link hasn't analogue
+                        {
+                            chain.Links.AddLast(new Link(row.OriginalArt, row.OriginalName));
+                            return chain;
+                        }
+                        else
+                        {
+                            chain.Links.AddLast(new Link(row.OriginalArt, row.OriginalName));
+                            chain.Links.Last.Value.InitAnalogue(row.AnalogueArt, row.AnalogueName);
+                            chain = SearchLink(chain, request, --depth);
+                        }
                     }
                 }
             }
-            return new Link(new string[] { request.SourceArt, request.SourceName });
+            if (!string.Equals(chain.Links.Last.Value.analogueArt, request.TargetArt) ||    // if chain isn't found
+                !string.Equals(chain.Links.Last.Value.analogueName, request.TargetArt))
+            {
+                chain.Links.RemoveLast();
+            }
+            return chain;
         }
     }
 }

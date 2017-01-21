@@ -1,23 +1,23 @@
 ﻿namespace TakeYourChain
 {
-    class Request
+    class Request : IPrepared
     {
         public string SourceArt { get; set; }
         public string SourceName { get; set; }
         public string TargetArt { get; }
         public string TargetName { get; }
-        public Request(string _source, string _target)
+        public Request(string source, string target)
         {
-            string[] sourceData = PrepareData(_source);
-            string[] targetData = PrepareData(_target);
-            SourceArt = sourceData.GetValue(0).ToString();
-            SourceName = sourceData.GetValue(1).ToString();
-            TargetArt = targetData.GetValue(0).ToString();
-            TargetName = targetData.GetValue(1).ToString();
+            string[] sourceData = source.Split('/');
+            string[] targetData = target.Split('/');
+            SourceArt = Prepare(SourceArt);
+            SourceName = Prepare(SourceName);
+            TargetArt = Prepare(TargetArt);
+            TargetName = Prepare(TargetName);
         }
-        public static string[] PrepareData(string request)
+        public string Prepare(string request)
         {
-            return request.Split('/');
+            return request.Replace(" ", "").Replace("/", "").Replace(".", "").Replace(",", "").ToLower();
         }
     }
 }
