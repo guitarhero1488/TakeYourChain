@@ -10,10 +10,10 @@
         {
             string[] sourceData = source.Split('/');
             string[] targetData = target.Split('/');
-            SourceArt = Prepare(SourceArt);
-            SourceName = Prepare(SourceName);
-            TargetArt = Prepare(TargetArt);
-            TargetName = Prepare(TargetName);
+            SourceArt = Prepare(sourceData.GetValue(0).ToString());
+            SourceName = Prepare(sourceData.GetValue(1).ToString());
+            TargetArt = Prepare(targetData.GetValue(0).ToString());
+            TargetName = Prepare(targetData.GetValue(1).ToString());
         }
         public string Prepare(string request)
         {

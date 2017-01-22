@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TakeYourChain
+﻿namespace TakeYourChain
 {
     class Row : IPrepared
     {
-        public string OriginalArt { get; set; }
-        public string OriginalName { get; set; }
+        public string OriginalArt { get; }
+        public string OriginalName { get; }
         public string AnalogueArt { get; }
         public string AnalogueName { get; }
 

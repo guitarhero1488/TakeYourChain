@@ -34,11 +34,6 @@ namespace TakeYourChain
                             Chain chain = new Chain(request.SourceArt, request.SourceName);
                             chain.InitLinkAnalogue(row.AnalogueArt, row.AnalogueName);
                             chain = SearchLink(chain, request, depth);
-                            if (chain.Links.Last.Value.analogueArt != null &&   // if founded chain has the necessary end
-                                chain.Links.Last.Value.analogueName != null)
-                            {
-                                list.AddLast(chain);
-                            }
                         }
                     }
                 }
@@ -75,13 +70,35 @@ namespace TakeYourChain
                         {
                             chain.Links.AddLast(new Link(row.OriginalArt, row.OriginalName));
                             chain.Links.Last.Value.InitAnalogue(row.AnalogueArt, row.AnalogueName);
-                            chain = SearchLink(chain, request, --depth);
+                            if (string.Equals(chain.Links.Last.Value.analogueArt, request.TargetArt) && 
+                                string.Equals(chain.Links.Last.Value.analogueName, request.TargetName))
+                            {
+                                Chain rightChain = new Chain(chain.Links.First.Value.originalArt, chain.Links.First.Value.originalName);
+                                rightChain.Links.Last.Value.InitAnalogue(chain.Links.First.Value.analogueArt, chain.Links.First.Value.analogueName);
+                                foreach (Link link in chain.Links)
+                                {
+                                    if (string.Equals(link.originalArt, rightChain.Links.First.Value.originalArt) && 
+                                        string.Equals(link.originalName, rightChain.Links.First.Value.originalName))
+                                    {
+                                        continue;
+                                    }
+                                    rightChain.Links.AddLast(new Link(link.originalArt, link.originalName));
+                                    rightChain.Links.Last.Value.InitAnalogue(link.analogueArt, link.analogueName);
+                                }
+                                list.AddLast(rightChain);
+                                chain.Links.RemoveLast();
+                                break;
+                            }
+                            else
+                            {
+                                chain = SearchLink(chain, request, --depth);
+                            }
                         }
                     }
                 }
             }
             if (!string.Equals(chain.Links.Last.Value.analogueArt, request.TargetArt) ||    // if chain isn't found
-                !string.Equals(chain.Links.Last.Value.analogueName, request.TargetArt))
+                !string.Equals(chain.Links.Last.Value.analogueName, request.TargetName))
             {
                 chain.Links.RemoveLast();
             }

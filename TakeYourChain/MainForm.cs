@@ -34,7 +34,7 @@ namespace TakeYourChain
         private void searchBtn_Click(object sender, EventArgs e)
         {
             SearchForm searchForm = new SearchForm();
-            searchForm.ShowDialog();
+            searchForm.Show();
         }        
 
         private void updateBtn_Click(object sender, EventArgs e)

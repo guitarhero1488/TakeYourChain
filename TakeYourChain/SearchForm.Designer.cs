@@ -57,7 +57,6 @@
             this.sourceArtNameTb.Name = "sourceArtNameTb";
             this.sourceArtNameTb.Size = new System.Drawing.Size(250, 20);
             this.sourceArtNameTb.TabIndex = 1;
-            this.sourceArtNameTb.Text = "KL9/Knecht";
             // 
             // searchLbl
             // 
@@ -85,7 +84,6 @@
             this.depthTb.Name = "depthTb";
             this.depthTb.Size = new System.Drawing.Size(50, 20);
             this.depthTb.TabIndex = 3;
-            this.depthTb.Text = "5";
             // 
             // targetArtNameTb
             // 
@@ -93,7 +91,6 @@
             this.targetArtNameTb.Name = "targetArtNameTb";
             this.targetArtNameTb.Size = new System.Drawing.Size(250, 20);
             this.targetArtNameTb.TabIndex = 2;
-            this.targetArtNameTb.Text = "03310/Febi";
             // 
             // fromLbl
             // 
