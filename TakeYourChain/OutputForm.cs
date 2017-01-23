@@ -13,9 +13,12 @@ namespace TakeYourChain
         {
             try
             {
-                for (int i = 0; i < Seeker.list.Count; i++)
+                for (int i = 0; i < Seeker.depth; i++)
                 {
                     outputDgv.Rows.Add();
+                }
+                for (int i = 0; i < Seeker.list.Count; i++)
+                {
                     outputDgv[0, i].Value = "Route " + i;
                 }
             }
@@ -27,31 +30,33 @@ namespace TakeYourChain
 
         private void outputDgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (outputDgv.CurrentCell.ColumnIndex == 0 && outputDgv.CurrentCell.RowIndex < Seeker.list.Count)
             {
-                for (int i = 0; i < outputDgv.Columns.Count; i++)
+                try
                 {
-                    outputDgv[1, i].Value = "";
+                    for (int i = 0; i < outputDgv.Rows.Count; i++)
+                    {
+                        outputDgv[1, i].Value = "";
+                    }
+                    int index = outputDgv.CurrentCell.RowIndex;
+                    int count = 0;
+                    foreach (Link link in Seeker.list[index].Links)
+                    {
+                        if (count >= Seeker.list.Count)
+                        {
+                            outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
+                        }
+                        else
+                        {
+                            outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
+                        }
+                        count++;
+                    }
                 }
-                int index = outputDgv.CurrentCell.RowIndex;
-                int count = 0;
-                foreach (Link link in Seeker.list[index].Links)
+                catch (System.Exception ex)
                 {
-                    if (count >= Seeker.list.Count)
-                    {
-                        outputDgv.Rows.Add();
-                        outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
-                    }
-                    else
-                    {
-                        outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
-                    }
-                    count++;
+                    MessageBox.Show(ex.Message.ToString());
                 }
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
             }
         }
     }

@@ -4,19 +4,21 @@ namespace TakeYourChain
 {
     class Seeker
     {
-        public static List<Chain> list;
+        public static int depth { get; set; }
+        public static List<Chain> list { get; set; }
         private static Request request;
 
-        public static void InitList(string source, string target, int depth)
+        public static void InitList(string source, string target, int _depth)
         {
-            request = new Request(source, target);
+            depth = _depth;
             list = new List<Chain>();
-            SearchChain(list, request, depth);
+            request = new Request(source, target);
+            SearchChain(list, request, _depth);
         }
 
         private static void SearchChain(List<Chain> list, Request request, int depth)
         {
-            if (depth != 0)
+            if (depth >= 0)
             {
                 foreach (System.Data.DataRow _row in Connector.receivedData.Tables[0].Rows)
                 {
@@ -40,11 +42,12 @@ namespace TakeYourChain
 
         private static Chain SearchLink(Chain chain, Request request, int depth)
         {
-            if (depth != 0)
+            if (depth >= 0)
             {
                 foreach (System.Data.DataRow _row in Connector.receivedData.Tables[0].Rows)
                 {
-                    Row row = new Row(_row.ItemArray[1].ToString(), _row.ItemArray[2].ToString(), _row.ItemArray[3].ToString(), _row.ItemArray[4].ToString(), _row.ItemArray[5].ToString());
+                    Row row = new Row(_row.ItemArray[1].ToString(), _row.ItemArray[2].ToString(), _row.ItemArray[3].ToString(),
+                                      _row.ItemArray[4].ToString(), _row.ItemArray[5].ToString());
                     if (string.Equals(chain.Links.Last.Value.analogueArt, row.OriginalArt) &&  // if the article and the name of the last chain's link
                         string.Equals(chain.Links.Last.Value.analogueName, row.OriginalName))  // matches the current row's values
                     {

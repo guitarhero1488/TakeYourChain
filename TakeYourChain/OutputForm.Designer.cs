@@ -59,6 +59,7 @@
             this.RoutesCol.HeaderText = "Routes";
             this.RoutesCol.Name = "RoutesCol";
             this.RoutesCol.ReadOnly = true;
+            this.RoutesCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ContentCol
             // 
@@ -66,6 +67,7 @@
             this.ContentCol.HeaderText = "Content";
             this.ContentCol.Name = "ContentCol";
             this.ContentCol.ReadOnly = true;
+            this.ContentCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // OutputForm
             // 

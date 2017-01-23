@@ -8,8 +8,8 @@
         public string TargetName { get; }
         public Request(string source, string target)
         {
-            string[] sourceData = source.Split('/');
-            string[] targetData = target.Split('/');
+            string[] sourceData = source.Split(new char[] { '\t', '/' });
+            string[] targetData = target.Split(new char[] { '\t', '/' });
             SourceArt = Prepare(sourceData.GetValue(0).ToString());
             SourceName = Prepare(sourceData.GetValue(1).ToString());
             TargetArt = Prepare(targetData.GetValue(0).ToString());
