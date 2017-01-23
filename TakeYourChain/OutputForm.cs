@@ -13,6 +13,14 @@ namespace TakeYourChain
         {
             try
             {
+                for (int i = 0; i < Seeker.list.Count; i++) // for correct output...
+                {
+                    if (Seeker.list[i].Links.Count > Seeker.depth)
+                    {
+                        Seeker.list.RemoveAt(i);
+                        i--;
+                    }
+                }
                 for (int i = 0; i < Seeker.depth; i++)
                 {
                     outputDgv.Rows.Add();
@@ -42,14 +50,7 @@ namespace TakeYourChain
                     int count = 0;
                     foreach (Link link in Seeker.list[index].Links)
                     {
-                        if (count >= Seeker.list.Count)
-                        {
-                            outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
-                        }
-                        else
-                        {
-                            outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
-                        }
+                        outputDgv[1, count].Value = link.originalArt + " " + link.originalName + " => " + link.analogueArt + " " + link.analogueName;
                         count++;
                     }
                 }

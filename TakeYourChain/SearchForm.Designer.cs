@@ -53,7 +53,7 @@
             // 
             // sourceArtNameTb
             // 
-            this.sourceArtNameTb.Location = new System.Drawing.Point(40, 35);
+            this.sourceArtNameTb.Location = new System.Drawing.Point(40, 40);
             this.sourceArtNameTb.Name = "sourceArtNameTb";
             this.sourceArtNameTb.Size = new System.Drawing.Size(250, 20);
             this.sourceArtNameTb.TabIndex = 1;
@@ -61,17 +61,18 @@
             // searchLbl
             // 
             this.searchLbl.AutoSize = true;
+            this.searchLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.searchLbl.Location = new System.Drawing.Point(9, 12);
             this.searchLbl.Name = "searchLbl";
-            this.searchLbl.Size = new System.Drawing.Size(256, 13);
+            this.searchLbl.Size = new System.Drawing.Size(349, 16);
             this.searchLbl.TabIndex = 2;
-            this.searchLbl.Text = "Enter the article or name of source and target details:";
+            this.searchLbl.Text = "Enter exactly separated \'/\' ARTICLE and NAME of details:";
             // 
             // depthLbl
             // 
             this.depthLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.depthLbl.AutoSize = true;
-            this.depthLbl.Location = new System.Drawing.Point(319, 38);
+            this.depthLbl.Location = new System.Drawing.Point(319, 47);
             this.depthLbl.Name = "depthLbl";
             this.depthLbl.Size = new System.Drawing.Size(36, 13);
             this.depthLbl.TabIndex = 3;
@@ -80,14 +81,15 @@
             // depthTb
             // 
             this.depthTb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.depthTb.Location = new System.Drawing.Point(322, 61);
+            this.depthTb.Location = new System.Drawing.Point(322, 67);
             this.depthTb.Name = "depthTb";
             this.depthTb.Size = new System.Drawing.Size(50, 20);
             this.depthTb.TabIndex = 3;
+            this.depthTb.Text = "5";
             // 
             // targetArtNameTb
             // 
-            this.targetArtNameTb.Location = new System.Drawing.Point(40, 61);
+            this.targetArtNameTb.Location = new System.Drawing.Point(40, 67);
             this.targetArtNameTb.Name = "targetArtNameTb";
             this.targetArtNameTb.Size = new System.Drawing.Size(250, 20);
             this.targetArtNameTb.TabIndex = 2;
@@ -96,7 +98,7 @@
             // 
             this.fromLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fromLbl.AutoSize = true;
-            this.fromLbl.Location = new System.Drawing.Point(9, 38);
+            this.fromLbl.Location = new System.Drawing.Point(9, 43);
             this.fromLbl.Name = "fromLbl";
             this.fromLbl.Size = new System.Drawing.Size(27, 13);
             this.fromLbl.TabIndex = 3;
@@ -106,7 +108,7 @@
             // 
             this.toLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toLbl.AutoSize = true;
-            this.toLbl.Location = new System.Drawing.Point(9, 64);
+            this.toLbl.Location = new System.Drawing.Point(9, 70);
             this.toLbl.Name = "toLbl";
             this.toLbl.Size = new System.Drawing.Size(16, 13);
             this.toLbl.TabIndex = 3;
