@@ -12,10 +12,12 @@ namespace TakeYourChain
 
         private void startSearchBtn_Click(object sender, EventArgs e)
         {
-            int depth = Convert.ToInt32(depthTb.Text);
             try
             {
-                Seeker list = new Seeker(sourceArtNameTb.Text, targetArtNameTb.Text, depth);                
+                int depth = Convert.ToInt32(depthTb.Text);
+                Seeker.InitList(sourceArtNameTb.Text, targetArtNameTb.Text, depth);
+                OutputForm output = new OutputForm();
+                output.ShowDialog();
             }
             catch (Exception ex)
             {
